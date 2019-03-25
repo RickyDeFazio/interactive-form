@@ -9,14 +9,21 @@ JSTD - Project 3
 const $name = $('#name');
 const $otherJobRole = $('#other-title');
 const $title = $('#title');
+const $design = $('#design');
+const $color = $('#color');
+const $colorSelection = $color.children();
+
 
 // Sets focus on first input element
 $name.focus();
 
 
-/**
-  Hide input element until event on 'other' triggers it to appear.
+// Job Role Section
+
+/*
+  Hides input element until user selects 'other' and triggers it to appear.
 */
+
 $otherJobRole.hide();
 
 $title.on('change', function() {
@@ -25,4 +32,43 @@ $title.on('change', function() {
   } else {
     return $otherJobRole.hide();
   }
+});
+
+
+// Tshirt Info Section
+
+/*
+  When user chooses a design theme, the color field and options are updated to reflect the relevant options.
+*/
+
+$design.on('change', function() {
+  if ( $(this).val() === 'js puns' ) {
+    $color.val('cornflowerblue');
+    $colorSelection.eq(0).show();
+    $colorSelection.eq(1).show();
+    $colorSelection.eq(2).show();
+    $colorSelection.eq(3).hide();
+    $colorSelection.eq(4).hide();
+    $colorSelection.eq(5).hide();
+  } else if ( $(this).val() === 'heart js' ) {
+    $color.val('tomato');
+    $colorSelection.eq(0).hide();
+    $colorSelection.eq(1).hide();
+    $colorSelection.eq(2).hide();
+    $colorSelection.eq(3).show();
+    $colorSelection.eq(4).show();
+    $colorSelection.eq(5).show();
+  } else {
+    $color.val('cornflowerblue');
+    $colorSelection.each(function() {
+      $(this).show();
+    });
+  }
+});
+
+
+// Register For Activities Section
+
+$(".activities").on('click', 'input', function() {
+  
 });
