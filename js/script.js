@@ -19,10 +19,10 @@ $name.focus();
 */
 $otherJobRole.hide();
 
-$title.on('click', function() {
+$title.on('change', function() {
   if ( $(this).val() === 'other' ) {
-    $otherJobRole.show();
+    return $otherJobRole.show();
   } else {
-    $otherJobRole.hide();
+    return $otherJobRole.hide();
   }
 });
