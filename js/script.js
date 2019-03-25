@@ -21,8 +21,8 @@ $otherJobRole.hide();
 
 $title.on('click', function() {
   if ( $(this).val() === 'other' ) {
-    $otherJobRole.show();
+    return $otherJobRole.show();
   } else {
-    $otherJobRole.hide();
+    return $otherJobRole.hide();
   }
 });
