@@ -68,3 +68,7 @@ $design.on('change', function() {
 
 
 // Register For Activities Section
+
+$(".activities").on('click', 'input', function() {
+  
+});
