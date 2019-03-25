@@ -69,6 +69,19 @@ $design.on('change', function() {
 
 // Register For Activities Section
 
-$(".activities").on('click', 'input', function() {
-  
+$(".activities").on('change', 'input', function() {
+  if ($('.tues9:checked').length > 0) {
+    $('.tues9:not(:checked').attr('disabled', true);
+    $('.tues9:not(:checked').parent().css('color', 'grey');
+  } else if ($('.tues9:checked').length === 0){
+    $('.tues9:not(:checked').attr('disabled', false);
+    $('.tues9:not(:checked').parent().css('color', '#000');
+  }
+  if ($('.tues1:checked').length > 0) {
+    $('.tues1:not(:checked').attr('disabled', true);
+    $('.tues1:not(:checked').parent().css('color', 'grey');
+  } else if ($('.tues1:checked').length === 0){
+    $('.tues1:not(:checked').attr('disabled', false);
+    $('.tues1:not(:checked').parent().css('color', '#000');
+  }
 });
