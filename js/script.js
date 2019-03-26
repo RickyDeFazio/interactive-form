@@ -70,6 +70,16 @@ $design.on('change', function() {
 // Register For Activities Section
 
 
+let sum = 0;
+const total = $('<p>Total: </p>');
+$('.activities').append(total);
+
+function addToTotal(cost) {
+  if ($(':checked')){
+    total.text('Total: $' + cost);
+  }
+};
+
 $activities.on('change', 'input', function() {
   if ($('.tues9:checked').length > 0) {
     $('.tues9:not(:checked').attr('disabled', true);
@@ -85,19 +95,6 @@ $activities.on('change', 'input', function() {
     $('.tues1:not(:checked').attr('disabled', false);
     $('.tues1:not(:checked').parent().css('color', '#000');
   }
-});
-
-let sum = 0;
-const total = $('<p>Total: </p>');
-$('.activities').append(total);
-
-function addToTotal(cost) {
-  if ($(':checked')){
-    total.text('Total: $' + cost);
-  }
-};
-
-$('.activity').on('change', 'input', function(){
   if (this.checked && $(this).parent().hasClass('main')) {
     sum += 200;
   } else if ($(':not(:checked)') && $(this).parent().hasClass('main')) {
@@ -105,8 +102,9 @@ $('.activity').on('change', 'input', function(){
   } 
   if (this.checked && $(this).parent().hasClass('workshop')){
     sum += 100;
-  } else {
+  } else if ($(':not(:checked)') && $(this).parent().hasClass('workshop')) {
     sum -= 100;
   }
   addToTotal(sum);
 });
+
