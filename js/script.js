@@ -13,7 +13,13 @@ const $color = $('#color');
 const $colorSelection = $color.children();
 const $activities = $('.activities');
 const $total = $('<p>Total: </p>');
+const $paymentInfo = $('.paymentInfo');
+const $paymentSelect = $('#payment');
+const $paypalInfo = $('.paypal');
+const $bitcoinInfo = $('.bitcoin');
+const $credit = $('#credit-card')
 let sum = 0;
+
 // Sets focus on first input element
 $name.focus();
 
@@ -117,3 +123,37 @@ $activities.on('change', 'input', function() {
 
   addToTotal(sum);
 });
+
+// Payment Info Section
+
+/*
+  1. Displays credit card section by default.
+  2. Displays payment sections based on the payment option chosen.
+  3. Does not allow user to select 'select payment option'. Reverts to credit card by default.
+*/
+$paymentSelect.val('credit card'); 
+$credit.show();
+$paypalInfo.hide();
+$bitcoinInfo.hide();
+
+$paymentSelect.on('change', function(){
+  if ($(this).val() === 'paypal') {
+    $paypalInfo.show();
+    $bitcoinInfo.hide();
+    $credit.hide();
+  } else if ($(this).val() === 'bitcoin') {
+    $bitcoinInfo.show();
+    $paypalInfo.hide();
+    $credit.hide();
+  } else if ($(this).val() === 'credit card'){
+    $credit.show();
+    $bitcoinInfo.hide();
+    $paypalInfo.hide();
+  } else {
+    $paymentSelect.val('credit card');
+    $credit.show();
+    $bitcoinInfo.hide();
+    $paypalInfo.hide();
+  }
+});
+
