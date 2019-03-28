@@ -6,6 +6,7 @@ JSTD - Project 3
  * Global Variables
  */
 const $name = $('#name');
+const $email = $('#mail');
 const $otherJobRole = $('#other-title');
 const $title = $('#title');
 const $design = $('#design');
@@ -18,6 +19,12 @@ const $paymentSelect = $('#payment');
 const $paypalInfo = $('.paypal');
 const $bitcoinInfo = $('.bitcoin');
 const $credit = $('#credit-card')
+const $creditNum = $('#cc-num');
+const $zipCode = $('#zip');
+const $cvv = $('#cvv');
+const $button = $('button');
+const $header = $('header');
+const $incomplete = $('<h3></h3>');
 let sum = 0;
 
 // Sets focus on first input element
@@ -124,6 +131,7 @@ $activities.on('change', 'input', function() {
   addToTotal(sum);
 });
 
+
 // Payment Info Section
 
 /*
@@ -157,3 +165,42 @@ $paymentSelect.on('change', function(){
   }
 });
 
+
+// Form Validation
+
+/* 
+  1. Checks if input name is valid. 
+  2. Checks if email is valid.
+  3. Checks if user has selected at least one activity.
+  4. Checks if credit card information is input correctly.
+  5. Else, prevent submission.
+*/
+$header.append($incomplete);
+$incomplete.hide();
+
+const validName = (name) => /^[^-\s\d][a-z ,.'-]+$/i.test(name);
+const validEmail = (email) => /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+const validCreditCard = (card) => /^\d{13}$|^\d{14}$|^\d{15}$|^\d{16}$/.test(card);
+const validZip = (zip) => /^\d{5}$/.test(zip);
+const validCVV = (cvv) => /^\d{3}$/.test(cvv);
+
+$button.on('click', function(e) {
+  if ( !validName($name.val()) || 
+       !validEmail($email.val()) ||
+       $('.activities input:checked').length === 0 ||
+       !validCreditCard($creditNum.val()) ||
+       !validZip($zipCode.val()) ||
+       !validCVV($cvv.val()) )
+  {
+    e.preventDefault();
+    $incomplete.text('At least one or more items are incomplete.').css('color', 'red').show();
+    $('.basicInfo legend').css('color', 'red');
+    $name.css('border', '2px solid red');
+    $email.css('border', '2px solid red');
+    $('.activities legend').css('color', 'red');
+    $('.paymentInfo legend').css('color', 'red');
+    $creditNum.css('border', '2px solid red');
+    $zipCode.css('border', '2px solid red');
+    $cvv.css('border', '2px solid red');
+  }
+});
