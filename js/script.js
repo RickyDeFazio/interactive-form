@@ -25,6 +25,7 @@ const $cvv = $('#cvv');
 const $button = $('button');
 const $header = $('header');
 const $incomplete = $('<h3></h3>');
+const $colorDiv = $('#colors-js-puns');
 let sum = 0;
 
 // Sets focus on first input element
@@ -52,8 +53,11 @@ $title.on('change', function() {
 /*
   When user chooses a design theme, the color field and options are updated to reflect the relevant options.
 */
+$colorDiv.hide();  // Hides color menu by default
+
 $design.on('change', function() {
   if ( $(this).val() === 'js puns' ) {
+    $colorDiv.show();
     $color.val('cornflowerblue');
     $colorSelection.eq(0).show();
     $colorSelection.eq(1).show();
@@ -62,6 +66,7 @@ $design.on('change', function() {
     $colorSelection.eq(4).hide();
     $colorSelection.eq(5).hide();
   } else if ( $(this).val() === 'heart js' ) {
+    $colorDiv.show();
     $color.val('tomato');
     $colorSelection.eq(0).hide();
     $colorSelection.eq(1).hide();
@@ -70,6 +75,7 @@ $design.on('change', function() {
     $colorSelection.eq(4).show();
     $colorSelection.eq(5).show();
   } else {
+    $colorDiv.hide();
     $color.val('cornflowerblue');
     $colorSelection.each(function() {
       $(this).show();
