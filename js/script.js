@@ -26,7 +26,9 @@ const $cvv = $('#cvv');
 const $button = $('button');
 const $header = $('header');
 const $incomplete = $('<h3></h3>');
+const $cvvMsg = $('<p></p>');
 const $colorDiv = $('#colors-js-puns');
+const $actMsg = $('#actMsg');
 let sum = 0;
 
 // Sets focus on first input element
@@ -184,6 +186,9 @@ $paymentSelect.on('change', function(){
 */
 $header.append($incomplete);
 $incomplete.hide();
+$credit.prepend($cvvMsg);
+$cvvMsg.hide();
+
 
 const validName = (name) => /^[^-\s\d][a-z ,.'-]+$/i.test(name);
 const validEmail = (email) => /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
@@ -194,10 +199,7 @@ const validCVV = (cvv) => /^\d{3}$/.test(cvv);
 $button.on('click', function(e) {
   if ( !validName($name.val()) || 
        !validEmail($email.val()) ||
-       $('.activities input:checked').length === 0 ||
-       !validCreditCard($creditNum.val()) ||
-       !validZip($zipCode.val()) ||
-       !validCVV($cvv.val()) )
+       $('.activities input:checked').length === 0 )
   {
     e.preventDefault();
     $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
@@ -213,26 +215,33 @@ $button.on('click', function(e) {
     $email.css('border', 'none');
   }
   if ( $('.activities input:checked').length === 0 ){
-    $activityLabels.css('color', 'red');
+    $actMsg.css('color', 'red');
   } else {
-    $activityLabels.css('color', 'black');
+    $actMsg.css('color', 'black');
   }
-  if ( !validCreditCard($creditNum.val()) ) {
+  if ($paymentSelect.val() === 'credit card' && !validCreditCard($creditNum.val()) ) {
+    e.preventDefault();
+    $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
     $creditNum.css('border', '2px solid red');
   } else {
     $creditNum.css('border', 'none');
   }
-  if ( !validZip($zipCode.val()) ) {
+  if ( $paymentSelect.val() === 'credit card' && !validZip($zipCode.val()) ) {
+    e.preventDefault();
+    $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
     $zipCode.css('border', '2px solid red');
   } else {
     $zipCode.css('border', 'none');
   }
-  if ( !validCVV($cvv.val()) ) {
+  if ( $paymentSelect.val() === 'credit card' && !validCVV($cvv.val()) ) {
+    e.preventDefault();
+    $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
     $cvv.css('border', '2px solid red');
   } else {
     $cvv.css('border', 'none');
   }
 });
+
 
 /* 
   Provides error indication in real-time.
@@ -255,9 +264,9 @@ $email.on("keyup", function() {
 
 $activities.on("change", function() {
   if ( $('.activities input:checked').length === 0 ){
-    $activityLabels.css('color', 'red');
+    $actMsg.css('color', 'red');
   } else {
-    $activityLabels.css('color', 'black');
+    $actMsg.css('color', 'black');
   }
 });
 
@@ -277,10 +286,22 @@ $zipCode.on("keyup", function() {
   }
 });
 
+/* 
+  Conditional error message for CVV.
+*/
+
 $cvv.on("keyup", function() {
-  if ( !validCVV($cvv.val()) ) {
+  if ( !validCVV($cvv.val()) && $cvv.val().length < 3 ) {
     $cvv.css('border', '2px solid red');
+    $cvvMsg.text('Please enter 3 digits for the CVV.').css('color', 'red').show();
+  } else if ( !validCVV($cvv.val()) && $cvv.val().length > 3 ) {
+    $cvv.css('border', '2px solid red');
+    $cvvMsg.text('Do not exceed 3 digits for the CVV.').css('color', 'red').show();
+  } else if ( !validCVV($cvv.val()) && /[\w]/.test($cvv.val()) ) {
+    $cvv.css('border', '2px solid red');
+    $cvvMsg.text('The CVV should only include digits.').css('color', 'red').show();
   } else {
+    $cvvMsg.hide();
     $cvv.css('border', 'none');
   }
 });

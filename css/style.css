@@ -135,6 +135,11 @@ button:hover {
 	margin-top: 1.25em;
 }
 
+.activities p {
+	color: black;
+	font-weight: bold;
+}
+
 /* ================================= 
   Helper Classes
 ==================================== */
