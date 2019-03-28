@@ -13,6 +13,7 @@ const $design = $('#design');
 const $color = $('#color');
 const $colorSelection = $color.children();
 const $activities = $('.activities');
+const $activityLabels = $('.activities label');
 const $total = $('<p>Total: </p>');
 const $paymentInfo = $('.paymentInfo');
 const $paymentSelect = $('#payment');
@@ -179,7 +180,7 @@ $paymentSelect.on('change', function(){
   2. Checks if email is valid.
   3. Checks if user has selected at least one activity.
   4. Checks if credit card information is input correctly.
-  5. Else, prevent submission.
+  5. Else, prevent submission and show errors.
 */
 $header.append($incomplete);
 $incomplete.hide();
@@ -199,14 +200,87 @@ $button.on('click', function(e) {
        !validCVV($cvv.val()) )
   {
     e.preventDefault();
-    $incomplete.text('At least one or more items are incomplete.').css('color', 'red').show();
-    $('.basicInfo legend').css('color', 'red');
+    $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
+  }
+  if ( !validName($name.val()) ) {
     $name.css('border', '2px solid red');
+  } else {
+    $name.css('border', 'none');
+  }
+  if ( !validEmail($email.val()) ) {
     $email.css('border', '2px solid red');
-    $('.activities legend').css('color', 'red');
-    $('.paymentInfo legend').css('color', 'red');
+  } else {
+    $email.css('border', 'none');
+  }
+  if ( $('.activities input:checked').length === 0 ){
+    $activityLabels.css('color', 'red');
+  } else {
+    $activityLabels.css('color', 'black');
+  }
+  if ( !validCreditCard($creditNum.val()) ) {
     $creditNum.css('border', '2px solid red');
+  } else {
+    $creditNum.css('border', 'none');
+  }
+  if ( !validZip($zipCode.val()) ) {
     $zipCode.css('border', '2px solid red');
+  } else {
+    $zipCode.css('border', 'none');
+  }
+  if ( !validCVV($cvv.val()) ) {
     $cvv.css('border', '2px solid red');
+  } else {
+    $cvv.css('border', 'none');
+  }
+});
+
+/* 
+  Provides error indication in real-time.
+*/ 
+$name.on("keyup", function() {
+  if ( !validName($name.val()) ) {
+    $name.css('border', '2px solid red');
+  } else {
+    $name.css('border', 'none');
+  }
+});
+
+$email.on("keyup", function() {
+  if ( !validEmail($email.val()) ) {
+    $email.css('border', '2px solid red');
+  } else {
+    $email.css('border', 'none');
+  }
+});
+
+$activities.on("change", function() {
+  if ( $('.activities input:checked').length === 0 ){
+    $activityLabels.css('color', 'red');
+  } else {
+    $activityLabels.css('color', 'black');
+  }
+});
+
+$creditNum.on("keyup", function() {
+  if ( !validCreditCard($creditNum.val()) ) {
+    $creditNum.css('border', '2px solid red');
+  } else {
+    $creditNum.css('border', 'none');
+  }
+});
+
+$zipCode.on("keyup", function() {
+  if ( !validZip($zipCode.val()) ) {
+    $zipCode.css('border', '2px solid red');
+  } else {
+    $zipCode.css('border', 'none');
+  }
+});
+
+$cvv.on("keyup", function() {
+  if ( !validCVV($cvv.val()) ) {
+    $cvv.css('border', '2px solid red');
+  } else {
+    $cvv.css('border', 'none');
   }
 });
