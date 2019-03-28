@@ -1,5 +1,5 @@
 /**************************
-JSTD - Project 3
+JSTD - Project 3 - Interactive Form
 ***************************/
 
 /**
@@ -35,6 +35,7 @@ let sum = 0;
 $name.focus();
 
 
+
 // Job Role Section
 
 /*
@@ -49,6 +50,7 @@ $title.on('change', function() {
     return $otherJobRole.hide();
   }
 });
+
 
 
 // Tshirt Info Section
@@ -87,6 +89,7 @@ $design.on('change', function() {
 });
 
 
+
 // Register For Activities Section
 
 /* 
@@ -100,6 +103,7 @@ function addToTotal(cost) {
     $total.text(`Total: $${cost}`);
   }
 };
+
 
 
 /* 
@@ -141,6 +145,7 @@ $activities.on('change', 'input', function() {
 });
 
 
+
 // Payment Info Section
 
 /*
@@ -173,6 +178,7 @@ $paymentSelect.on('change', function(){
     $paypalInfo.hide();
   }
 });
+
 
 
 // Form Validation
@@ -243,6 +249,7 @@ $button.on('click', function(e) {
 });
 
 
+
 /* 
   Provides error indication in real-time.
 */ 
@@ -286,10 +293,11 @@ $zipCode.on("keyup", function() {
   }
 });
 
+
+
 /* 
   Conditional error message for CVV.
 */
-
 $cvv.on("keyup", function() {
   if ( !validCVV($cvv.val()) && $cvv.val().length < 3 ) {
     $cvv.css('border', '2px solid red');
