@@ -1,3 +1,4 @@
 # Interactive Form
 
-This project utilized Javascript with jQuery, HTML, and CSS to create an interactive form for a fictional conference event.
+* An interactive form for a fictional conference; Users input their information using many different form inputs.
+* Implements form validation and displays content based on logic using jQuery.
