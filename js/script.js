@@ -15,7 +15,7 @@ const $paymentInfo = $('.paymentInfo');
 const $paymentSelect = $('#payment');
 const $paypalInfo = $('.paypal');
 const $bitcoinInfo = $('.bitcoin');
-const $credit = $('#credit-card')
+const $credit = $('#credit-card');
 const $creditNum = $('#cc-num');
 const $zipCode = $('#zip');
 const $cvv = $('#cvv');
@@ -30,8 +30,6 @@ let sum = 0;
 // Sets focus on first input element
 $name.focus();
 
-
-
 // Job Role Section
 
 /*
@@ -40,24 +38,22 @@ $name.focus();
 $otherJobRole.hide();
 
 $title.on('change', function() {
-  if ( $(this).val() === 'other' ) {
+  if ($(this).val() === 'other') {
     return $otherJobRole.show();
   } else {
     return $otherJobRole.hide();
   }
 });
 
-
-
 // Tshirt Info Section
 
 /*
   When user chooses a design theme, the color field and options are updated to reflect the relevant options.
 */
-$colorDiv.hide();  // Hides color menu by default
+$colorDiv.hide(); // Hides color menu by default
 
 $design.on('change', function() {
-  if ( $(this).val() === 'js puns' ) {
+  if ($(this).val() === 'js puns') {
     $colorDiv.show();
     $color.val('cornflowerblue');
     $colorSelection.eq(0).show();
@@ -66,7 +62,7 @@ $design.on('change', function() {
     $colorSelection.eq(3).hide();
     $colorSelection.eq(4).hide();
     $colorSelection.eq(5).hide();
-  } else if ( $(this).val() === 'heart js' ) {
+  } else if ($(this).val() === 'heart js') {
     $colorDiv.show();
     $color.val('tomato');
     $colorSelection.eq(0).hide();
@@ -84,8 +80,6 @@ $design.on('change', function() {
   }
 });
 
-
-
 // Register For Activities Section
 
 /* 
@@ -95,12 +89,10 @@ $design.on('change', function() {
 $activities.append($total);
 
 function addToTotal(cost) {
-  if ($(':checked')){
+  if ($(':checked')) {
     $total.text(`Total: $${cost}`);
   }
-};
-
-
+}
 
 /* 
   1. Event handler listens for change on activities.
@@ -111,36 +103,62 @@ $activities.on('change', 'input', function() {
   // Tuesday at 9AM time frame
   if ($('.tues9:checked').length > 0) {
     $('.tues9:not(:checked').attr('disabled', true);
-    $('.tues9:not(:checked').parent().css('color', 'grey');
-  } else if ($('.tues9:checked').length === 0){
+    $('.tues9:not(:checked')
+      .parent()
+      .css('color', 'grey');
+  } else if ($('.tues9:checked').length === 0) {
     $('.tues9:not(:checked').attr('disabled', false);
-    $('.tues9:not(:checked').parent().css('color', '#000');
+    $('.tues9:not(:checked')
+      .parent()
+      .css('color', '#000');
   }
   // Tuesday at 1PM time frame
   if ($('.tues1:checked').length > 0) {
     $('.tues1:not(:checked').attr('disabled', true);
-    $('.tues1:not(:checked').parent().css('color', 'grey');
-  } else if ($('.tues1:checked').length === 0){
+    $('.tues1:not(:checked')
+      .parent()
+      .css('color', 'grey');
+  } else if ($('.tues1:checked').length === 0) {
     $('.tues1:not(:checked').attr('disabled', false);
-    $('.tues1:not(:checked').parent().css('color', '#000');
+    $('.tues1:not(:checked')
+      .parent()
+      .css('color', '#000');
   }
   // Adding/Subtracting from total (main conference)
-  if (this.checked && $(this).parent().hasClass('main')) {
+  if (
+    this.checked &&
+    $(this)
+      .parent()
+      .hasClass('main')
+  ) {
     sum += 200;
-  } else if ($(':not(:checked)') && $(this).parent().hasClass('main')) {
+  } else if (
+    $(':not(:checked)') &&
+    $(this)
+      .parent()
+      .hasClass('main')
+  ) {
     sum -= 200;
   }
   // Adding/subtracting from total (workshops)
-  if (this.checked && $(this).parent().hasClass('workshop')){
+  if (
+    this.checked &&
+    $(this)
+      .parent()
+      .hasClass('workshop')
+  ) {
     sum += 100;
-  } else if ($(':not(:checked)') && $(this).parent().hasClass('workshop')) {
+  } else if (
+    $(':not(:checked)') &&
+    $(this)
+      .parent()
+      .hasClass('workshop')
+  ) {
     sum -= 100;
   }
 
   addToTotal(sum);
 });
-
-
 
 // Payment Info Section
 
@@ -149,12 +167,12 @@ $activities.on('change', 'input', function() {
   2. Displays payment sections based on the payment option chosen.
   3. Does not allow user to select 'select payment option'. Reverts to credit card by default.
 */
-$paymentSelect.val('credit card'); 
+$paymentSelect.val('credit card');
 $credit.show();
 $paypalInfo.hide();
 $bitcoinInfo.hide();
 
-$paymentSelect.on('change', function(){
+$paymentSelect.on('change', function() {
   if ($(this).val() === 'paypal') {
     $paypalInfo.show();
     $bitcoinInfo.hide();
@@ -163,7 +181,7 @@ $paymentSelect.on('change', function(){
     $bitcoinInfo.show();
     $paypalInfo.hide();
     $credit.hide();
-  } else if ($(this).val() === 'credit card'){
+  } else if ($(this).val() === 'credit card') {
     $credit.show();
     $bitcoinInfo.hide();
     $paypalInfo.hide();
@@ -174,8 +192,6 @@ $paymentSelect.on('change', function(){
     $paypalInfo.hide();
   }
 });
-
-
 
 // Form Validation
 
@@ -191,119 +207,141 @@ $incomplete.hide();
 $credit.prepend($cvvMsg);
 $cvvMsg.hide();
 
-
-const validName = (name) => /^[^-\s\d][a-z ,.'-]+$/i.test(name);
-const validEmail = (email) => /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
-const validCreditCard = (card) => /^\d{13}$|^\d{14}$|^\d{15}$|^\d{16}$/.test(card);
-const validZip = (zip) => /^\d{5}$/.test(zip);
-const validCVV = (cvv) => /^\d{3}$/.test(cvv);
+const validName = name => /^[^-\s\d][a-z ,.'-]+$/i.test(name);
+const validEmail = email => /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+const validCreditCard = card =>
+  /^\d{13}$|^\d{14}$|^\d{15}$|^\d{16}$/.test(card);
+const validZip = zip => /^\d{5}$/.test(zip);
+const validCVV = cvv => /^\d{3}$/.test(cvv);
 
 $button.on('click', function(e) {
-  if ( !validName($name.val()) || 
-       !validEmail($email.val()) ||
-       $('.activities input:checked').length === 0 )
-  {
+  if (
+    !validName($name.val()) ||
+    !validEmail($email.val()) ||
+    $('.activities input:checked').length === 0
+  ) {
     e.preventDefault();
-    $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
+    $incomplete
+      .text('At least one or more fields are incomplete or inaccurate.')
+      .css('color', 'red')
+      .show();
   }
-  if ( !validName($name.val()) ) {
+  if (!validName($name.val())) {
     $name.css('border', '2px solid red');
   } else {
     $name.css('border', 'none');
   }
-  if ( !validEmail($email.val()) ) {
+  if (!validEmail($email.val())) {
     $email.css('border', '2px solid red');
   } else {
     $email.css('border', 'none');
   }
-  if ( $('.activities input:checked').length === 0 ){
+  if ($('.activities input:checked').length === 0) {
     $actMsg.css('color', 'red');
   } else {
     $actMsg.css('color', 'black');
   }
-  if ($paymentSelect.val() === 'credit card' && !validCreditCard($creditNum.val()) ) {
+  if (
+    $paymentSelect.val() === 'credit card' &&
+    !validCreditCard($creditNum.val())
+  ) {
     e.preventDefault();
-    $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
+    $incomplete
+      .text('At least one or more fields are incomplete or inaccurate.')
+      .css('color', 'red')
+      .show();
     $creditNum.css('border', '2px solid red');
   } else {
     $creditNum.css('border', 'none');
   }
-  if ( $paymentSelect.val() === 'credit card' && !validZip($zipCode.val()) ) {
+  if ($paymentSelect.val() === 'credit card' && !validZip($zipCode.val())) {
     e.preventDefault();
-    $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
+    $incomplete
+      .text('At least one or more fields are incomplete or inaccurate.')
+      .css('color', 'red')
+      .show();
     $zipCode.css('border', '2px solid red');
   } else {
     $zipCode.css('border', 'none');
   }
-  if ( $paymentSelect.val() === 'credit card' && !validCVV($cvv.val()) ) {
+  if ($paymentSelect.val() === 'credit card' && !validCVV($cvv.val())) {
     e.preventDefault();
-    $incomplete.text('At least one or more fields are incomplete or inaccurate.').css('color', 'red').show();
+    $incomplete
+      .text('At least one or more fields are incomplete or inaccurate.')
+      .css('color', 'red')
+      .show();
     $cvv.css('border', '2px solid red');
   } else {
     $cvv.css('border', 'none');
   }
 });
 
-
-
 /* 
   Provides error indication in real-time.
-*/ 
-$name.on("keyup", function() {
-  if ( !validName($name.val()) ) {
+*/
+
+$name.on('keyup', function() {
+  if (!validName($name.val())) {
     $name.css('border', '2px solid red');
   } else {
     $name.css('border', 'none');
   }
 });
 
-$email.on("keyup", function() {
-  if ( !validEmail($email.val()) ) {
+$email.on('keyup', function() {
+  if (!validEmail($email.val())) {
     $email.css('border', '2px solid red');
   } else {
     $email.css('border', 'none');
   }
 });
 
-$activities.on("change", function() {
-  if ( $('.activities input:checked').length === 0 ){
+$activities.on('change', function() {
+  if ($('.activities input:checked').length === 0) {
     $actMsg.css('color', 'red');
   } else {
     $actMsg.css('color', 'black');
   }
 });
 
-$creditNum.on("keyup", function() {
-  if ( !validCreditCard($creditNum.val()) ) {
+$creditNum.on('keyup', function() {
+  if (!validCreditCard($creditNum.val())) {
     $creditNum.css('border', '2px solid red');
   } else {
     $creditNum.css('border', 'none');
   }
 });
 
-$zipCode.on("keyup", function() {
-  if ( !validZip($zipCode.val()) ) {
+$zipCode.on('keyup', function() {
+  if (!validZip($zipCode.val())) {
     $zipCode.css('border', '2px solid red');
   } else {
     $zipCode.css('border', 'none');
   }
 });
 
-
-
 /* 
   Conditional error message for CVV.
 */
-$cvv.on("keyup", function() {
-  if ( !validCVV($cvv.val()) && $cvv.val().length < 3 ) {
+$cvv.on('keyup', function() {
+  if (!validCVV($cvv.val()) && $cvv.val().length < 3) {
     $cvv.css('border', '2px solid red');
-    $cvvMsg.text('Please enter 3 digits for the CVV.').css('color', 'red').show();
-  } else if ( !validCVV($cvv.val()) && $cvv.val().length > 3 ) {
+    $cvvMsg
+      .text('Please enter 3 digits for the CVV.')
+      .css('color', 'red')
+      .show();
+  } else if (!validCVV($cvv.val()) && $cvv.val().length > 3) {
     $cvv.css('border', '2px solid red');
-    $cvvMsg.text('Do not exceed 3 digits for the CVV.').css('color', 'red').show();
-  } else if ( !validCVV($cvv.val()) && /[\w]/.test($cvv.val()) ) {
+    $cvvMsg
+      .text('Do not exceed 3 digits for the CVV.')
+      .css('color', 'red')
+      .show();
+  } else if (!validCVV($cvv.val()) && /[\w]/.test($cvv.val())) {
     $cvv.css('border', '2px solid red');
-    $cvvMsg.text('The CVV should only include digits.').css('color', 'red').show();
+    $cvvMsg
+      .text('The CVV should only include digits.')
+      .css('color', 'red')
+      .show();
   } else {
     $cvvMsg.hide();
     $cvv.css('border', 'none');
